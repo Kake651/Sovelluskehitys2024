@@ -7,10 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Klikkaa" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="70" Margin="292,230,0,0" Click="Button_Click"/>
-        <TextBox x:Name="tekstikenttä" HorizontalAlignment="Left" Margin="292,290,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" Height="30" TextChanged="TextBox_TextChanged"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,10,303"/>
-        <ComboBox HorizontalAlignment="Left" Margin="603,245,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="58,45,0,0" Click="Button_Click"/>
+        <TextBox x:Name="tekstikenttä" HorizontalAlignment="Left" Margin="542,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" Height="30" TextChanged="TextBox_TextChanged"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="58,120,280,74"/>
 
     </Grid>
 </Window>
