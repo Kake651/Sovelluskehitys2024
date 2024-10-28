@@ -18,6 +18,8 @@
         <Label Grid.Column="1" Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="466,120,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
         <TextBox x:Name="tuotehinta" Grid.Column="1" HorizontalAlignment="Left" Margin="586,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30"/>
         <Button Grid.Column="1" Content="Lisää tuote" HorizontalAlignment="Left" Margin="586,193,0,0" VerticalAlignment="Top" Width="143" Height="39" Click="Button_Click_1"/>
+        <ComboBox x:Name="tuotelista_cb" Grid.Column="1" HorizontalAlignment="Left" Margin="585,277,0,0" VerticalAlignment="Top" Width="144" SelectionChanged="ComboBox_SelectionChanged" Height="30"/>
+        <Button Grid.Column="1" Content="Poista tuote" HorizontalAlignment="Left" Margin="585,321,0,0" VerticalAlignment="Top" Height="39" Width="144"/>
 
     </Grid>
 </Window>
