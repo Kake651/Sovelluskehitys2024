@@ -7,9 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="58,45,0,0" Click="Button_Click"/>
-        <TextBox x:Name="tekstikenttä" HorizontalAlignment="Left" Margin="542,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" Height="30" TextChanged="TextBox_TextChanged"/>
-        <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="58,120,280,74"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="391*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="36,45,0,0" Click="Button_Click" Grid.Column="1"/>
+        <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="586,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+        <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="36,120,376,74" Grid.Column="1"/>
+        <Label Grid.Column="1" Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="466,45,0,0" VerticalAlignment="Top" Height="30" Width="95"/>
+        <Label Grid.Column="1" Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="466,120,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
+        <TextBox x:Name="tuotehinta" Grid.Column="1" HorizontalAlignment="Left" Margin="586,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30"/>
+        <Button Grid.Column="1" Content="Lisää tuote" HorizontalAlignment="Left" Margin="586,193,0,0" VerticalAlignment="Top" Width="143" Height="39" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
