@@ -9,7 +9,7 @@
     <Grid>
         <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="58,45,0,0" Click="Button_Click"/>
         <TextBox x:Name="tekstikenttä" HorizontalAlignment="Left" Margin="542,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" Height="30" TextChanged="TextBox_TextChanged"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="58,120,280,74"/>
+        <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="58,120,280,74"/>
 
     </Grid>
 </Window>
