@@ -20,6 +20,7 @@ namespace Sovelluskehitys2024
     /// </summary>
     public partial class MainWindow : Window
     {
+        string polku = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\k2202274\\Documents\\testitietokanta.mdf;Integrated Security=True;Connect Timeout=30";
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +28,6 @@ namespace Sovelluskehitys2024
 
         private void PäivitäDataGrid(object sender, RoutedEventArgs e)
         {
-            string polku = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\k2202274\\Documents\\testitietokanta.mdf;Integrated Security=True;Connect Timeout=30";
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
 
@@ -46,7 +46,6 @@ namespace Sovelluskehitys2024
 
         private void PäivitäComboBox(object sender, RoutedEventArgs e)
         {
-            string polku = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\k2202274\\Documents\\testitietokanta.mdf;Integrated Security=True;Connect Timeout=30";
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
 
@@ -77,7 +76,7 @@ namespace Sovelluskehitys2024
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string polku = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\k2202274\\Documents\\testitietokanta.mdf;Integrated Security=True;Connect Timeout=30";
+            
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
 
@@ -88,11 +87,27 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid(sender, e);
+            PäivitäComboBox(sender, e);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string nimi = tuotelista_cb.SelectedValue.ToString();
+            string kysely = "DELETE FROM tuotteet WHERE nimi='" + nimi + "';";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+            yhteys.Close();
+
+            PäivitäDataGrid(sender, e);
+            PäivitäComboBox(sender, e);
         }
     }
 }
