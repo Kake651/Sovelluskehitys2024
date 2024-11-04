@@ -11,15 +11,32 @@
             <ColumnDefinition Width="9*"/>
             <ColumnDefinition Width="391*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="36,45,0,0" Click="Button_Click" Grid.Column="1"/>
-        <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="586,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
-        <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="36,120,376,74" Grid.Column="1"/>
-        <Label Grid.Column="1" Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="466,45,0,0" VerticalAlignment="Top" Height="30" Width="95"/>
-        <Label Grid.Column="1" Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="466,120,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
-        <TextBox x:Name="tuotehinta" Grid.Column="1" HorizontalAlignment="Left" Margin="586,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30"/>
-        <Button Grid.Column="1" Content="Lisää tuote" HorizontalAlignment="Left" Margin="586,193,0,0" VerticalAlignment="Top" Width="143" Height="39" Click="Button_Click_1"/>
-        <ComboBox x:Name="tuotelista_cb" Grid.Column="1" HorizontalAlignment="Left" Margin="585,277,0,0" VerticalAlignment="Top" Width="144" SelectionChanged="ComboBox_SelectionChanged" Height="30"/>
-        <Button Grid.Column="1" Content="Poista tuote" HorizontalAlignment="Left" Margin="585,321,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_2"/>
+
+        <TabControl Grid.Column="1">
+            <TabItem Header="Etusivu">
+                <Grid Background="#FFE5E5E5" Margin="8,0,-8,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="383*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Hae tietokannasta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="111" Margin="26,45,0,0" Click="Button_Click" Grid.Column="1"/>
+                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="36,120,376,74" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Toiminnot">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="586,60,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30" TextChanged="TextBox_TextChanged"/>
+                    <Label Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="486,60,0,0" VerticalAlignment="Top" Height="30" Width="95"/>
+                    <Label Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="486,122,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
+                    <TextBox x:Name="tuotehinta" Grid.Column="1" HorizontalAlignment="Left" Margin="586,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="143" Height="30"/>
+                    <Button Content="Lisää tuote" HorizontalAlignment="Left" Margin="586,164,0,0" VerticalAlignment="Top" Width="143" Height="39" Click="Button_Click_1"/>
+                    <ComboBox x:Name="tuotelista_cb" Grid.Column="1" HorizontalAlignment="Left" Margin="585,277,0,0" VerticalAlignment="Top" Width="144" SelectionChanged="ComboBox_SelectionChanged" Height="30"/>
+                    <Button Grid.Column="1" Content="Poista tuote" HorizontalAlignment="Left" Margin="585,321,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_2"/>
+                    <Label Content="Valitse poistettava tuote" HorizontalAlignment="Left" Margin="586,251,0,0" VerticalAlignment="Top" Width="143"/>
+                    <Label Content="Syötä lisättävän tuotteen tiedot" HorizontalAlignment="Left" Margin="486,10,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
