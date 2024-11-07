@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Windows;
@@ -24,27 +25,30 @@ namespace Sovelluskehitys2024
         public MainWindow()
         {
             InitializeComponent();
+
+            PäivitäDataGrid("SELECT * FROM tuotteet","tuotteet", tuotelista);
+            PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+            PäivitäComboBox();
         }
 
-        private void PäivitäDataGrid(object sender, RoutedEventArgs e)
+        private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
         {
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
 
-            string kysely = "SELECT * FROM tuotteet";
             SqlCommand komento = yhteys.CreateCommand();
             komento.CommandText = kysely;
 
             SqlDataAdapter adapteri = new SqlDataAdapter(komento);
-            DataTable dt = new DataTable("tuotteet");
+            DataTable dt = new DataTable(taulu);
             adapteri.Fill(dt);
 
-            tuotelista.ItemsSource = dt.DefaultView;
+            grid.ItemsSource = dt.DefaultView;
 
             yhteys.Close();
         }
 
-        private void PäivitäComboBox(object sender, RoutedEventArgs e)
+        private void PäivitäComboBox()
         {
             //tuotelista_cb.Items.Clear();
 
@@ -77,13 +81,8 @@ namespace Sovelluskehitys2024
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PäivitäDataGrid(sender, e);
-            PäivitäComboBox(sender, e);
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
+            PäivitäComboBox();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -98,13 +97,10 @@ namespace Sovelluskehitys2024
 
             yhteys.Close();
 
-            PäivitäDataGrid(sender, e);
-            PäivitäComboBox(sender, e);
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
+            PäivitäComboBox();
+            tuotehinta.Clear();
+            tuotenimi.Clear();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -118,8 +114,8 @@ namespace Sovelluskehitys2024
             komento.ExecuteNonQuery();
             yhteys.Close();
 
-            PäivitäDataGrid(sender, e);
-            PäivitäComboBox(sender, e);
+            PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
+            PäivitäComboBox();
         }
     }
 }
