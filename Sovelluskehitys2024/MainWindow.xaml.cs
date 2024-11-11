@@ -26,9 +26,17 @@ namespace Sovelluskehitys2024
         {
             InitializeComponent();
 
-            PäivitäDataGrid("SELECT * FROM tuotteet","tuotteet", tuotelista);
-            PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
-            PäivitäComboBox();
+            try
+            {
+                PäivitäDataGrid("SELECT * FROM tuotteet","tuotteet", tuotelista);
+                PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+                PäivitäComboBox(); //testiä
+            }
+            catch
+            {
+                tilaviesti.Text = "Ei tietokantayhteyttä";
+            }
+            
         }
 
         private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
