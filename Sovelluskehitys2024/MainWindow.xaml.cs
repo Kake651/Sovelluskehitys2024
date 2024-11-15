@@ -30,7 +30,10 @@ namespace Sovelluskehitys2024
             {
                 PäivitäDataGrid("SELECT * FROM tuotteet","tuotteet", tuotelista);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
-                PäivitäComboBox(); //testiä
+                PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id", "tilaukset", Tilauslista);
+                PäivitäComboBox(tuotelista_cb,tuotelista_cb_2);
+                PäivitäAsiakasComboBox();
+
             }
             catch
             {
@@ -56,7 +59,7 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
-        private void PäivitäComboBox()
+        private void PäivitäComboBox(ComboBox kombo1, ComboBox kombo2)
         {
             //tuotelista_cb.Items.Clear();
 
@@ -71,9 +74,13 @@ namespace Sovelluskehitys2024
             taulu.Columns.Add("NIMI",  typeof(string));
 
             /* tehdään disokset että comboboxissa näytetään datataulua */
-            tuotelista_cb.ItemsSource = taulu.DefaultView;
-            tuotelista_cb.DisplayMemberPath = "NIMI";
-            tuotelista_cb.SelectedValuePath = "ID";
+            kombo1.ItemsSource = taulu.DefaultView;
+            kombo1.DisplayMemberPath = "NIMI";
+            kombo1.SelectedValuePath = "ID";
+
+            kombo2.ItemsSource = taulu.DefaultView;
+            kombo2.DisplayMemberPath = "NIMI";
+            kombo2.SelectedValuePath = "ID";
 
             while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
             {
@@ -87,10 +94,42 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
+        private void PäivitäAsiakasComboBox()
+        {
+            //asiakaslista_cb.Items.Clear();
+
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM asiakkaat", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            asiakaslista_cb.ItemsSource = taulu.DefaultView;
+            asiakaslista_cb.DisplayMemberPath = "NIMI";
+            asiakaslista_cb.SelectedValuePath = "ID";
+
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //asiakaslista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
-            PäivitäComboBox();
+            PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -106,7 +145,7 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
-            PäivitäComboBox();
+            PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
             tuotehinta.Clear();
             tuotenimi.Clear();
         }
@@ -123,7 +162,7 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
-            PäivitäComboBox();
+            PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -138,6 +177,25 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+            PäivitäAsiakasComboBox();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string asiakasID = asiakaslista_cb.SelectedValue.ToString();
+            string tuoteID = tuotelista_cb_2.SelectedValue.ToString();
+
+            string sql = "INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES ('"+asiakasID+"','"+tuoteID+ "');";
+
+            SqlCommand komento = new SqlCommand(sql, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id", "tilaukset", Tilauslista);
         }
     }
 }

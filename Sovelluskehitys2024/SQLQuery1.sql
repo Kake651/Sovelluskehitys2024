@@ -7,11 +7,13 @@ create table tilaukset (id integer identity(1,1) primary key, asiakas_id integer
 
 insert into asiakkaat (nimi, osoite, puhelin) values ('Pena', 'Mäkitie 7', '+3584668992')
 insert into tuotteet (nimi, hinta) values ('olut', '2')
-INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES (2, 1)
+INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES (1, 1)
 
 
 SELECT * FROM asiakkaat
-SELECT * FROM tilaukset
 SELECT * FROM tuotteet
+SELECT * FROM tilaukset
 
-delete from tuotteet where id = 4
+SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id
+
+delete from asiakkaat where id = 6
