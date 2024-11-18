@@ -26,7 +26,7 @@
             </TabItem>
             <TabItem Header="Lisää/Poista tuote">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="110,0,0,304" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Width="143" Height="22"/>
+                    <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="110,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
                     <Label Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Height="30" Width="95"/>
                     <Label Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
                     <TextBox x:Name="tuotehinta" HorizontalAlignment="Left" Margin="110,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
@@ -53,7 +53,20 @@
             </TabItem>
             <TabItem Header="Tilaukset">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,388,100"/>
+                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,388,100" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id" Binding="{Binding Path='id'}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="tilaaja" Binding="{Binding Path='asiakas'}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="tuote" Binding="{Binding Path='tuote'}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="toimita_tilaus" Content="Toimita" Click="toimita_tilaus_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <Label Content="Asiakas" HorizontalAlignment="Left" Margin="461,54,0,0" VerticalAlignment="Top"/>
                     <Label Content="Tuote" HorizontalAlignment="Left" Margin="461,109,0,0" VerticalAlignment="Top"/>
                     <Button Content="Lisää Tilaus" HorizontalAlignment="Left" Margin="581,157,0,0" VerticalAlignment="Top" Width="120" Height="36" Click="Button_Click_4"/>

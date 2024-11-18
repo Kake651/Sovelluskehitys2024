@@ -4,6 +4,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,10 +29,10 @@ namespace Sovelluskehitys2024
 
             try
             {
-                PäivitäDataGrid("SELECT * FROM tuotteet","tuotteet", tuotelista);
+                PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
-                PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id", "tilaukset", Tilauslista);
-                PäivitäComboBox(tuotelista_cb,tuotelista_cb_2);
+                PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
+                PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
                 PäivitäAsiakasComboBox();
 
             }
@@ -39,7 +40,7 @@ namespace Sovelluskehitys2024
             {
                 tilaviesti.Text = "Ei tietokantayhteyttä";
             }
-            
+
         }
 
         private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
@@ -70,8 +71,8 @@ namespace Sovelluskehitys2024
             SqlDataReader lukija = komento.ExecuteReader();
 
             DataTable taulu = new DataTable();
-            taulu.Columns.Add("ID",  typeof(string));
-            taulu.Columns.Add("NIMI",  typeof(string));
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
 
             /* tehdään disokset että comboboxissa näytetään datataulua */
             kombo1.ItemsSource = taulu.DefaultView;
@@ -134,7 +135,7 @@ namespace Sovelluskehitys2024
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
+
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
 
@@ -188,14 +189,30 @@ namespace Sovelluskehitys2024
             string asiakasID = asiakaslista_cb.SelectedValue.ToString();
             string tuoteID = tuotelista_cb_2.SelectedValue.ToString();
 
-            string sql = "INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES ('"+asiakasID+"','"+tuoteID+ "');";
+            string sql = "INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES ('" + asiakasID + "','" + tuoteID + "');";
 
             SqlCommand komento = new SqlCommand(sql, yhteys);
             komento.ExecuteNonQuery();
 
             yhteys.Close();
 
-            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id", "tilaukset", Tilauslista);
+            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
+        }
+        private void toimita_tilaus_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView rivinakyma = (DataRowView)((Button)e.Source).DataContext;
+            String tilaus_id = rivinakyma[0].ToString();
+
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+            string sql = "UPDATE tilaukset set toimitettu = 1 WHERE id ='" + tilaus_id + "';";
+
+            SqlCommand komento = new SqlCommand(sql, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
         }
     }
 }
