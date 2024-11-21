@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControlzEx.Theming;
+using MahApps.Metro.Controls;
 
 using Microsoft.Data.SqlClient;
 
@@ -20,12 +22,14 @@ namespace Sovelluskehitys2024
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         string polku = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\k2202274\\Documents\\testitietokanta.mdf;Integrated Security=True;Connect Timeout=30";
         public MainWindow()
         {
             InitializeComponent();
+
+            ThemeManager.Current.ChangeTheme(this,"Light.Teal");
 
             try
             {
