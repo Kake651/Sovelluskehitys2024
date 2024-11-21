@@ -32,6 +32,7 @@ namespace Sovelluskehitys2024
                 PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
+                PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
                 PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
                 PäivitäAsiakasComboBox();
 
@@ -213,6 +214,7 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
+            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
         }
     }
 }
