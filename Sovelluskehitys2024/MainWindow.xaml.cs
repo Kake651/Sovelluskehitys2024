@@ -29,11 +29,12 @@ namespace Sovelluskehitys2024
         {
             InitializeComponent();
 
-            ThemeManager.Current.ChangeTheme(this,"Light.Teal");
+            //ThemeManager.Current.ChangeTheme(this,"Light.Teal");
 
             try
             {
                 PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
+                PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelut);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
