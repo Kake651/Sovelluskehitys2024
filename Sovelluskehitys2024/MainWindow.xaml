@@ -37,9 +37,20 @@
                     <Button Content="Poista tuote" HorizontalAlignment="Left" Margin="110,296,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_2"/>
                     <Label Content="Valitse poistettava tuote" HorizontalAlignment="Left" Margin="111,230,0,0" VerticalAlignment="Top" Width="143"/>
                     <Label Content="Syötä lisättävän tuotteen tiedot" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top"/>
+
                     <Label x:Name="lisätty_teksti" Content="Lisätty!" HorizontalAlignment="Left" Margin="258,171,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
-                    
-                    
+
+                    <TextBox x:Name="Huoltopalvelu" HorizontalAlignment="Left" Margin="621,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
+                    <Label Content="Huoltopalvelun nimi" HorizontalAlignment="Left" Margin="491,56,0,0" VerticalAlignment="Top" Height="30" Width="125"/>
+                    <Label Content="Huoltopalvelun hinta" HorizontalAlignment="Left" Margin="491,104,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
+                    <TextBox x:Name="Huoltopalveluhinta" HorizontalAlignment="Left" Margin="621,106,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
+                    <Button Content="Lisää työ" HorizontalAlignment="Left" Margin="621,150,0,0" VerticalAlignment="Top" Width="143" Height="39"/>
+                    <ComboBox x:Name="huoltopalvelulista_cb" HorizontalAlignment="Left" Margin="621,261,0,0" VerticalAlignment="Top" Width="144" Height="30"/>
+                    <Button Content="Poista palvelu" HorizontalAlignment="Left" Margin="621,296,0,0" VerticalAlignment="Top" Height="39" Width="144"/>
+                    <Label Content="Valitse poistettava palvelu" HorizontalAlignment="Left" Margin="620,230,0,0" VerticalAlignment="Top" Width="154"/>
+                    <Label Content="Syötä lisättävän huoltopalvelun tiedot" HorizontalAlignment="Left" Margin="508,25,0,0" VerticalAlignment="Top"/>
+
+
                 </Grid>
             </TabItem>
             <TabItem Header="Asiakkaat">

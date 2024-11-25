@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControlzEx.Standard;
 using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 
@@ -34,8 +36,8 @@ namespace Sovelluskehitys2024
             try
             {
                 PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
-                PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelut);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+                PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelut);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
                 PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
@@ -221,5 +223,6 @@ namespace Sovelluskehitys2024
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
         }
+
     }
 }
