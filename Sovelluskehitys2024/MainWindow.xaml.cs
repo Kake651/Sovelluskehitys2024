@@ -37,6 +37,7 @@ namespace Sovelluskehitys2024
             {
                 PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+                PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
                 PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelut);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
@@ -185,6 +186,9 @@ namespace Sovelluskehitys2024
 
             yhteys.Close();
 
+            asiakasnimi.Clear();
+            asiakaspuhelin.Clear();
+            asiakasosoite.Clear();
             PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
             PäivitäAsiakasComboBox();
         }
@@ -206,6 +210,8 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
         }
+
+
         private void toimita_tilaus_Click(object sender, RoutedEventArgs e)
         {
             DataRowView rivinakyma = (DataRowView)((Button)e.Source).DataContext;
@@ -222,6 +228,24 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string kysely = "INSERT INTO Asentajat (nimi, puhelin) VALUES ('" + asentajanimi.Text + "','" + asentajapuhelin.Text + "'); ";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            asentajanimi.Clear();
+            asentajapuhelin.Clear();
+            PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
+            //PäivitäAsentajaComboBox();
+
         }
 
     }
