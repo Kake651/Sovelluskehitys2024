@@ -38,10 +38,11 @@ namespace Sovelluskehitys2024
                 PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
                 PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
                 PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
-                PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelut);
+                PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelulista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
                 PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
+                PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
                 PäivitäAsiakasComboBox();
 
             }
@@ -248,5 +249,70 @@ namespace Sovelluskehitys2024
 
         }
 
+        private void PäivitäComboBox_2(ComboBox kombo1, ComboBox kombo2)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM huoltopalvelut", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            kombo1.ItemsSource = taulu.DefaultView;
+            kombo1.DisplayMemberPath = "NIMI";
+            kombo1.SelectedValuePath = "ID";
+
+            kombo2.ItemsSource = taulu.DefaultView;
+            kombo2.DisplayMemberPath = "NIMI";
+            kombo2.SelectedValuePath = "ID";
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //tuotelista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string kysely = "INSERT INTO huoltopalvelut (nimi, hinta) VALUES ('" + Huoltopalvelu.Text + "'," + Huoltopalveluhinta.Text + ");";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelulista);
+            PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
+            Huoltopalveluhinta.Clear();
+            Huoltopalvelu.Clear();
+
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string id = huoltopalvelulista_cb.SelectedValue.ToString();
+            string kysely = "DELETE FROM huoltopalvelut WHERE id='" + id + "';";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelulista);
+            PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
+        }
     }
 }
