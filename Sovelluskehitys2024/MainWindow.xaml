@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Sovelluskehitys2024"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="900" MinHeight="500" MinWidth="900">
+        Title="MainWindow" Height="500" Width="900" MinHeight="500" MinWidth="1200">
     <Grid>
         <Menu DockPanel.Dock ="Top">
             <MenuItem Header="_Tiedosto">
@@ -22,8 +22,8 @@
         <TabControl Margin="0,20,0,0">
             <TabItem Header="Tuotteet ja huoltopalvelut">
                 <Grid>
-                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,20,477,140"/>
-                    <DataGrid x:Name="huoltopalvelut" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="460,20,27,140"/>
+                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,20,644,140"/>
+                    <DataGrid x:Name="huoltopalvelut" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="624,20,30,140"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tuote- ja palveluhallinta">
@@ -55,20 +55,20 @@
             </TabItem>
             <TabItem Header="Asiakkaat">
                 <Grid>
-                    <DataGrid x:Name="asiakaslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,388,100"/>
+                    <DataGrid x:Name="asiakaslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="222,41,176,69"/>
                     <Label Content="Nimi" HorizontalAlignment="Left" Margin="523,68,0,0" VerticalAlignment="Top"/>
                     <Label Content="Puhelin" HorizontalAlignment="Left" Margin="509,126,0,0" VerticalAlignment="Top"/>
                     <Label Content="Osoite" HorizontalAlignment="Left" Margin="514,187,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="asiakaspuhelin" HorizontalAlignment="Left" Margin="567,128,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
-                    <TextBox x:Name="asiakasosoite" HorizontalAlignment="Left" Margin="567,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
-                    <TextBox x:Name="asiakasnimi" HorizontalAlignment="Left" Margin="567,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
-                    <Button Content="Lisää asiakas" HorizontalAlignment="Left" Margin="574,247,0,0" VerticalAlignment="Top" Width="130" Height="36" Click="Button_Click_3"/>
-                    <Label Content="Syötä lisättävän asiakkaan tiedot" HorizontalAlignment="Left" Margin="529,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="asiakaspuhelin" HorizontalAlignment="Left" Margin="779,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
+                    <TextBox x:Name="asiakasosoite" HorizontalAlignment="Left" Margin="779,220,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
+                    <TextBox x:Name="asiakasnimi" HorizontalAlignment="Left" Margin="779,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
+                    <Button Content="Lisää asiakas" HorizontalAlignment="Left" Margin="786,278,0,0" VerticalAlignment="Top" Width="130" Height="36" Click="Button_Click_3"/>
+                    <Label Content="Syötä lisättävän asiakkaan tiedot" HorizontalAlignment="Left" Margin="760,68,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Tilaukset">
+            <TabItem Header="Tuotetilaukset">
                 <Grid>
-                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,388,100" AutoGenerateColumns="False">
+                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="199,38,199,72" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="id" Binding="{Binding Path='id'}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="tilaaja" Binding="{Binding Path='asiakas'}" IsReadOnly="True"/>
@@ -84,9 +84,9 @@
                     </DataGrid>
                     <Label Content="Asiakas" HorizontalAlignment="Left" Margin="461,54,0,0" VerticalAlignment="Top"/>
                     <Label Content="Tuote" HorizontalAlignment="Left" Margin="461,109,0,0" VerticalAlignment="Top"/>
-                    <Button Content="Lisää Tilaus" HorizontalAlignment="Left" Margin="581,157,0,0" VerticalAlignment="Top" Width="120" Height="36" Click="Button_Click_4"/>
-                    <ComboBox x:Name="asiakaslista_cb" HorizontalAlignment="Left" Margin="581,56,0,0" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox x:Name="tuotelista_cb_2" HorizontalAlignment="Left" Margin="581,111,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="Lisää Tilaus" HorizontalAlignment="Left" Margin="770,185,0,0" VerticalAlignment="Top" Width="120" Height="36" Click="Button_Click_4"/>
+                    <ComboBox x:Name="asiakaslista_cb" HorizontalAlignment="Left" Margin="770,84,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="tuotelista_cb_2" HorizontalAlignment="Left" Margin="770,139,0,0" VerticalAlignment="Top" Width="120"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Toimitetut tilaukset">
