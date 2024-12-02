@@ -41,9 +41,15 @@ namespace Sovelluskehitys2024
                 PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelulista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
                 PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
+
+                PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
+                /*PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='1'", "", );*/
+
                 PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
                 PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
                 PäivitäAsiakasComboBox();
+                PäivitäAsiakasComboBox2();
+                PäivitäAsentajaComboBox();
 
             }
             catch
@@ -123,6 +129,68 @@ namespace Sovelluskehitys2024
             asiakaslista_cb.ItemsSource = taulu.DefaultView;
             asiakaslista_cb.DisplayMemberPath = "NIMI";
             asiakaslista_cb.SelectedValuePath = "ID";
+
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //asiakaslista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
+
+        private void PäivitäAsiakasComboBox2()
+        {
+            //asiakaslista_cb.Items.Clear();
+
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM asiakkaat", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            asiakaslista_cb_2.ItemsSource = taulu.DefaultView;
+            asiakaslista_cb_2.DisplayMemberPath = "NIMI";
+            asiakaslista_cb_2.SelectedValuePath = "ID";
+
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //asiakaslista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
+
+        private void PäivitäAsentajaComboBox()
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM Asentajat", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            asentajalista_cb.ItemsSource = taulu.DefaultView;
+            asentajalista_cb.DisplayMemberPath = "NIMI";
+            asentajalista_cb.SelectedValuePath = "ID";
 
 
             while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
@@ -229,6 +297,27 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
+
+
+        }
+
+        private void huoltotilaus_vamis_click(object sender, RoutedEventArgs e)
+        {
+            DataRowView rivinakyma = (DataRowView)((Button)e.Source).DataContext;
+            String huoltotilaus_id = rivinakyma[0].ToString();
+
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+            string sql = "UPDATE huoltotilaukset set valmis = 1 WHERE id ='" + huoltotilaus_id + "';";
+
+            SqlCommand komento = new SqlCommand(sql, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
+
+            /*PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='1'", "", );*/
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
@@ -245,7 +334,7 @@ namespace Sovelluskehitys2024
             asentajanimi.Clear();
             asentajapuhelin.Clear();
             PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
-            //PäivitäAsentajaComboBox();
+            PäivitäAsentajaComboBox();
 
         }
 
@@ -314,5 +403,25 @@ namespace Sovelluskehitys2024
             PäivitäDataGrid("SELECT * FROM huoltopalvelut", "huoltopalvelut", huoltopalvelulista);
             PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
         }
+        
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string asentajaID = asentajalista_cb.SelectedValue.ToString();
+            string huoltopalveluID = huoltopalvelulista_cb_2.SelectedValue.ToString();
+            string asiakasID = asiakaslista_cb_2.SelectedValue.ToString();
+
+            string sql = "INSERT INTO huoltotilaukset (asentaja_id, huoltopalvelu_id, asiakas_id) VALUES ('" + asentajaID + "','" + huoltopalveluID + "','" + asiakasID +"');";
+
+            SqlCommand komento = new SqlCommand(sql, yhteys);
+            komento.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
+        }
+        
     }
 }

@@ -8,6 +8,8 @@ create table Asentajat (id integer identity (1,1) Primary key, nimi varchar(50),
 
 create table tilaukset (id integer identity(1,1) primary key, asiakas_id integer references asiakkaat on delete cascade, tuote_id integer references tuotteet on delete cascade, toimitettu BIT DEFAULT 0)
 
+create table huoltotilaukset (id integer identity(1,1) primary key,asentaja_id integer references Asentajat on delete cascade, huoltopalvelu_id integer references huoltopalvelut on delete cascade, asiakas_id integer references asiakkaat on delete cascade, valmis BIT DEFAULT 0)
+
 
 insert into asiakkaat (nimi, osoite, puhelin) values ('Pena', 'Mäkitie 7', '+3584668992')
 insert into Asentajat (nimi, puhelin) values ('Pertti', '+3588522146')
@@ -21,6 +23,7 @@ Delete FROM tuotteet
 SELECT * FROM tilaukset
 SELECT * FROM huoltopalvelut
 SELECT * FROM Asentajat
+SELECT * FROM huoltotilaukset
 
 
 UPDATE tilaukset set toimitettu = 1 WHERE id =1

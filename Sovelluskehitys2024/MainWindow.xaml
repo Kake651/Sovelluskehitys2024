@@ -50,9 +50,6 @@
                     <Label Content="Valitse poistettava palvelu" HorizontalAlignment="Left" Margin="844,278,0,0" VerticalAlignment="Top" Width="154"/>
                     <Label Content="Syötä lisättävän huoltopalvelun tiedot" HorizontalAlignment="Left" Margin="714,73,0,0" VerticalAlignment="Top"/>
 
-                    <ComboBox x:Name="huoltopalvelulista_cb_2" HorizontalAlignment="Left" Margin="1066,310,0,0" VerticalAlignment="Top" Width="120"/>
-
-
                 </Grid>
             </TabItem>
             <TabItem Header="Asiakkaat">
@@ -81,7 +78,7 @@
             </TabItem>
             <TabItem Header="Tilaukset">
                 <Grid>
-                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,764,259" AutoGenerateColumns="False">
+                    <DataGrid x:Name="Tilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="60,10,719,259" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="id" Binding="{Binding Path='id'}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="tilaaja" Binding="{Binding Path='asiakas'}" IsReadOnly="True"/>
@@ -100,6 +97,30 @@
                     <Button Content="Lisää Tilaus" HorizontalAlignment="Left" Margin="217,387,0,0" VerticalAlignment="Top" Width="120" Height="36" Click="Button_Click_4"/>
                     <ComboBox x:Name="asiakaslista_cb" HorizontalAlignment="Left" Margin="217,287,0,0" VerticalAlignment="Top" Width="120"/>
                     <ComboBox x:Name="tuotelista_cb_2" HorizontalAlignment="Left" Margin="217,341,0,0" VerticalAlignment="Top" Width="120"/>
+
+                    <DataGrid x:Name="Huoltotilauslista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="754,10,60,259" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id" Binding="{Binding Path='id'}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="asentaja" Binding="{Binding Path='asentaja'}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="huoltopalvelu" Binding="{Binding Path='huoltopalvelu'}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="tilaaja" Binding="{Binding Path='asiakas'}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="Huoltotilaus_valmis" Content="Valmis" Click="huoltotilaus_vamis_click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Label Content="Asentaja" HorizontalAlignment="Left" Margin="964,266,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Huoltopalvelu" HorizontalAlignment="Left" Margin="935,315,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Lisää Huoltotilaus" HorizontalAlignment="Left" Margin="1033,417,0,0" VerticalAlignment="Top" Width="120" Height="36" Click="Button_Click_8"/>
+                    <ComboBox x:Name="asentajalista_cb" HorizontalAlignment="Left" Margin="1033,265,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="huoltopalvelulista_cb_2" HorizontalAlignment="Left" Margin="1033,320,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="asiakaslista_cb_2" HorizontalAlignment="Left" Margin="1033,370,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label Content="Asiakas" HorizontalAlignment="Left" Margin="970,370,0,0" VerticalAlignment="Top" Height="26"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Toimitetut tilaukset">
