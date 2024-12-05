@@ -6,49 +6,43 @@
         xmlns:local="clr-namespace:Sovelluskehitys2024"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="900" MinHeight="600" MinWidth="1280">
+        Title="Laitemyynti ja palvelut" Height="500" Width="900" MinHeight="600" MinWidth="1280">
     <Grid>
-        <Menu DockPanel.Dock ="Top">
-            <MenuItem Header="_Tiedosto">
-                <MenuItem Header="_Avaa"></MenuItem>
-                <MenuItem Header="_Sulje"></MenuItem>
-                <MenuItem Header="_Tallenna"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Tietokanta">
-                <MenuItem Header="_Avaa"></MenuItem>
-                <MenuItem Header="_Sulje"></MenuItem>
-            </MenuItem>
-        </Menu>
         <TabControl Margin="0,20,0,0">
             <TabItem Header="Tuotteet ja huoltopalvelut">
                 <Grid>
-                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,20,654,140"/>
-                    <DataGrid x:Name="huoltopalvelulista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="654,20,10,140"/>
+                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,20,659,140"/>
+                    <DataGrid x:Name="huoltopalvelulista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="630,20,10,140"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="452" Margin="620,20,0,0" VerticalAlignment="Top" Width="5"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tuote- ja palveluhallinta">
                 <Grid>
-                    <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="334,108,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
-                    <Label Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="234,104,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
-                    <Label Content="Tuotteen hinta" HorizontalAlignment="Left" Margin="234,152,0,0" VerticalAlignment="Top" Height="26" Width="94"/>
-                    <TextBox x:Name="tuotehinta" HorizontalAlignment="Left" Margin="334,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
-                    <Button Content="Lisää tuote" HorizontalAlignment="Left" Margin="334,198,0,0" VerticalAlignment="Top" Width="142" Height="39" Click="Button_Click_1"/>
-                    <ComboBox x:Name="tuotelista_cb" HorizontalAlignment="Left" Margin="334,309,0,0" VerticalAlignment="Top" Width="144" Height="30"/>
-                    <Button Content="Poista tuote" HorizontalAlignment="Left" Margin="334,344,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_2"/>
-                    <Label Content="Valitse poistettava tuote" HorizontalAlignment="Left" Margin="334,278,0,0" VerticalAlignment="Top" Width="144"/>
-                    <Label Content="Syötä lisättävän tuotteen tiedot" HorizontalAlignment="Left" Margin="234,73,0,0" VerticalAlignment="Top"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="LightCyan"  Margin="204,30,637,104"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="LightSkyBlue"  Margin="637,30,202,104"/>
+                    <TextBox x:Name="tuotenimi" HorizontalAlignment="Left" Margin="420,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
+                    <Label Content="Tuotteen nimi" HorizontalAlignment="Left" Margin="326,100,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
+                    <Label Content="Tuotteen hinta (Eur)" HorizontalAlignment="Left" Margin="300,148,0,0" VerticalAlignment="Top" Height="26" Width="114"/>
+                    <TextBox x:Name="tuotehinta" HorizontalAlignment="Left" Margin="420,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="142" Height="22"/>
+                    <Button Content="Lisää tuote" HorizontalAlignment="Left" Margin="420,194,0,0" VerticalAlignment="Top" Width="142" Height="39" Click="Button_Click_1"/>
+                    <ComboBox x:Name="tuotelista_cb" HorizontalAlignment="Left" Margin="420,306,0,0" VerticalAlignment="Top" Width="144" Height="30"/>
+                    <Button Content="Poista tuote" HorizontalAlignment="Left" Margin="420,340,0,0" VerticalAlignment="Top" Height="40" Width="144" Click="Button_Click_2"/>
+                    <Label Content="Valitse poistettava tuote" HorizontalAlignment="Left" Margin="420,274,0,0" VerticalAlignment="Top" Width="144"/>
+                    <Label Content="Syötä lisättävän tuotteen tiedot" HorizontalAlignment="Left" Margin="220,41,0,0" VerticalAlignment="Top"/>
 
                     <Label x:Name="lisätty_teksti" Content="Lisätty!" HorizontalAlignment="Left" Margin="258,171,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
 
-                    <TextBox x:Name="Huoltopalvelu" HorizontalAlignment="Left" Margin="844,108,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144" Height="22"/>
-                    <Label Content="Huoltopalvelun nimi" HorizontalAlignment="Left" Margin="714,104,0,0" VerticalAlignment="Top" Height="30" Width="126"/>
-                    <Label Content="Huoltopalvelun hinta (alk.)" HorizontalAlignment="Left" Margin="690,152,0,0" VerticalAlignment="Top" Height="26" Width="150"/>
-                    <TextBox x:Name="Huoltopalveluhinta" HorizontalAlignment="Left" Margin="844,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144" Height="22"/>
-                    <Button Content="Lisää palvelu" HorizontalAlignment="Left" Margin="844,198,0,0" VerticalAlignment="Top" Width="144" Height="39" Click="Button_Click_6"/>
-                    <ComboBox x:Name="huoltopalvelulista_cb" HorizontalAlignment="Left" Margin="844,309,0,0" VerticalAlignment="Top" Width="144" Height="30"/>
-                    <Button Content="Poista palvelu" HorizontalAlignment="Left" Margin="844,344,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_7"/>
-                    <Label Content="Valitse poistettava palvelu" HorizontalAlignment="Left" Margin="844,278,0,0" VerticalAlignment="Top" Width="154"/>
-                    <Label Content="Syötä lisättävän huoltopalvelun tiedot" HorizontalAlignment="Left" Margin="714,73,0,0" VerticalAlignment="Top"/>
+
+                    <TextBox x:Name="Huoltopalvelu" HorizontalAlignment="Left" Margin="868,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144" Height="22"/>
+                    <Label Content="Huoltopalvelun nimi" HorizontalAlignment="Left" Margin="738,96,0,0" VerticalAlignment="Top" Height="30" Width="126"/>
+                    <Label Content="Huoltopalvelun hinta (Eur)" HorizontalAlignment="Left" Margin="714,144,0,0" VerticalAlignment="Top" Height="26" Width="150"/>
+                    <TextBox x:Name="Huoltopalveluhinta" HorizontalAlignment="Left" Margin="868,146,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144" Height="22"/>
+                    <Button Content="Lisää palvelu" HorizontalAlignment="Left" Margin="868,190,0,0" VerticalAlignment="Top" Width="144" Height="39" Click="Button_Click_6"/>
+                    <ComboBox x:Name="huoltopalvelulista_cb" HorizontalAlignment="Left" Margin="868,301,0,0" VerticalAlignment="Top" Width="144" Height="30"/>
+                    <Button Content="Poista palvelu" HorizontalAlignment="Left" Margin="868,336,0,0" VerticalAlignment="Top" Height="39" Width="144" Click="Button_Click_7"/>
+                    <Label Content="Valitse poistettava palvelu" HorizontalAlignment="Left" Margin="868,270,0,0" VerticalAlignment="Top" Width="154"/>
+                    <Label Content="Syötä lisättävän huoltopalvelun tiedot" HorizontalAlignment="Left" Margin="650,41,0,0" VerticalAlignment="Top"/>
+
 
                 </Grid>
             </TabItem>
@@ -63,6 +57,7 @@
                     <TextBox x:Name="asiakasnimi" HorizontalAlignment="Left" Margin="779,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
                     <Button Content="Lisää asiakas" HorizontalAlignment="Left" Margin="786,278,0,0" VerticalAlignment="Top" Width="130" Height="36" Click="Button_Click_3"/>
                     <Label Content="Syötä lisättävän asiakkaan tiedot" HorizontalAlignment="Left" Margin="760,68,0,0" VerticalAlignment="Top"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="203" Margin="659,30,0,0" VerticalAlignment="Top" Width="5"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Asentajat">
@@ -74,6 +69,7 @@
                     <TextBox x:Name="asentajanimi" HorizontalAlignment="Left" Margin="779,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" Height="22"/>
                     <Button Content="Lisää asentaja" HorizontalAlignment="Left" Margin="785,220,0,0" VerticalAlignment="Top" Width="130" Height="36" Click="Button_Click_5"/>
                     <Label Content="Syötä lisättävän asentajan tiedot" HorizontalAlignment="Left" Margin="760,68,0,0" VerticalAlignment="Top"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="203" Margin="659,30,0,0" VerticalAlignment="Top" Width="5"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tilaukset">
@@ -123,12 +119,20 @@
                     <Label Content="Asiakas" HorizontalAlignment="Left" Margin="754,398,0,0" VerticalAlignment="Top" Height="26"/>
                     <Label Content="Täytä tilaaja ja tuote" HorizontalAlignment="Left" Margin="60,259,0,0" VerticalAlignment="Top"/>
                     <Label Content="Täytä Asentaja, huollonpalvelu ja tilaaja" HorizontalAlignment="Left" Margin="754,259,0,0" VerticalAlignment="Top"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="244" Margin="560,10,0,0" VerticalAlignment="Top" Width="6"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Toimitetut tilaukset">
                 <Grid>
-                    <DataGrid x:Name="Toimitetutlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,700,100"/>
-                    <DataGrid x:Name="Toimitetuthuollotlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="700,10,10,100"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="LightGreen"  Margin="10,340,700,23"/>
+                    <Label x:Name="Tilaukset_eurot" Content="Tilausten tuotto" Background="White" HorizontalAlignment="Left" Margin="25,418,0,0" VerticalAlignment="Top" FontSize="20"/>
+                    <Label Content="Tilausten tuotto" HorizontalAlignment="Left" Margin="25,350,0,0" VerticalAlignment="Top" FontSize="24"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="LightGreen"  Margin="700,340,10,23"/>
+                    <Label x:Name="Huoltopalvelut_eurot" Content="Tilausten tuotto" Background="White" HorizontalAlignment="Left" Margin="716,418,0,0" VerticalAlignment="Top" FontSize="20"/>
+                    <Label Content="Huoltopalveluiden tuotto" HorizontalAlignment="Left" Margin="716,350,0,0" VerticalAlignment="Top" FontSize="24"/>
+                    <DataGrid x:Name="Toimitetutlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,700,200"/>
+                    <DataGrid x:Name="Toimitetuthuollotlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="700,10,10,200"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>

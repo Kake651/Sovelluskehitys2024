@@ -31,3 +31,7 @@ UPDATE tilaukset set toimitettu = 1 WHERE id =1
 SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id
 
 delete from asiakkaat where id = 4
+
+
+SELECT t.hinta FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1;
+SELECT sum(t.hinta) FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1;

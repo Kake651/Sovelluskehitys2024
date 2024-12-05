@@ -48,6 +48,7 @@ namespace Sovelluskehitys2024
                 PäivitäAsiakasComboBox();
                 PäivitäAsiakasComboBox2();
                 PäivitäAsentajaComboBox();
+                PäivitäTilausTuotto();
 
             }
             catch
@@ -57,7 +58,29 @@ namespace Sovelluskehitys2024
 
         }
 
-        private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
+        private void PäivitäTilausTuotto()
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT sum(t.hinta) FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1;", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            if (lukija.Read()) 
+            {
+                var tuotto = lukija.IsDBNull(0) ? 0 : lukija.GetInt32(0);
+
+                Tilaukset_eurot.Content = tuotto.ToString();
+            }
+
+            yhteys.Close();
+        }
+
+        
+
+      
+
+            private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
         {
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
@@ -295,7 +318,7 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
-
+            PäivitäTilausTuotto();
 
         }
 
