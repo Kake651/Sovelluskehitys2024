@@ -476,6 +476,28 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
         }
-        
+
+
+        private void Tyhjennä_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string kysely1 = "delete from tilaukset where toimitettu = 1";
+            SqlCommand komento1 = new SqlCommand(kysely1, yhteys);
+            komento1.ExecuteNonQuery();
+
+            string kysely2 = "delete from huoltotilaukset where valmis = 1";
+            SqlCommand komento2 = new SqlCommand(kysely2, yhteys);
+            komento2.ExecuteNonQuery();
+
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
+            PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='1'", "huoltotilaukset", Toimitetuthuollotlista);
+            PäivitäTilausTuotto();
+            PäivitäHuoltoTuotto();
+            PäivitäKokoTuotto();
+        }
     }
 }

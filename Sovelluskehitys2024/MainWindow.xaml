@@ -11,9 +11,11 @@
         <TabControl Margin="0,20,0,0">
             <TabItem Header="Tuotteet ja huoltopalvelut">
                 <Grid>
-                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,20,659,140"/>
-                    <DataGrid x:Name="huoltopalvelulista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="630,20,10,140"/>
-                    <GridSplitter HorizontalAlignment="Left" Height="452" Margin="620,20,0,0" VerticalAlignment="Top" Width="5"/>
+                    <DataGrid x:Name="tuotelista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,37,659,140"/>
+                    <DataGrid x:Name="huoltopalvelulista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="630,37,10,140"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="435" Margin="620,37,0,0" VerticalAlignment="Top" Width="5"/>
+                    <Label Content="Tuotteet" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Huoltopalvelut" HorizontalAlignment="Left" Margin="630,1,0,0" VerticalAlignment="Top" FontSize="16"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tuote- ja palveluhallinta">
@@ -134,14 +136,15 @@
                     <Border BorderBrush="Gray" BorderThickness="1" Background="LightGreen"  Margin="799,340,10,23" CornerRadius="8"/>
                     <Label x:Name="Huoltopalvelut_eurot" Content="Huoltojen tuotto" Background="White" HorizontalAlignment="Left" Margin="953,418,0,0" VerticalAlignment="Top" FontSize="20"/>
                     <Label Content="Huoltopalveluiden tuotto" HorizontalAlignment="Left" Margin="893,350,0,0" VerticalAlignment="Top" FontSize="24"/>
-                    <DataGrid x:Name="Toimitetutlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,43,700,207"/>
-                    <DataGrid x:Name="Toimitetuthuollotlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="700,43,10,207"/>
+                    <DataGrid x:Name="Toimitetutlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,43,700,217"/>
+                    <DataGrid x:Name="Toimitetuthuollotlista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="700,43,10,217"/>
                     <Border BorderBrush="Gray" BorderThickness="1" Background="LightGoldenrodYellow"  Margin="475,340,475,23" CornerRadius="8"/>
                     <Label Content="Kokonaistuotto" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Margin="0,350,0,0"/>
                     <Label x:Name="Kokonais_eurot" Content="Koko tuotto" Background="White" HorizontalAlignment="Center" Margin="0,418,0,0" VerticalAlignment="Top" FontSize="20"/>
                     <Label Content="Toimitetut tuotteet" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Valmiit huoltopalvelut" HorizontalAlignment="Left" Margin="700,10,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <GridSplitter HorizontalAlignment="Left" Height="269" Margin="579,43,0,0" VerticalAlignment="Top" Width="5"/>
+                    <GridSplitter HorizontalAlignment="Left" Height="257" Margin="579,43,0,0" VerticalAlignment="Top" Width="5"/>
+                    <Button x:Name="Tyhjennä" Content="Tyhjennä taulut" HorizontalAlignment="Center" Margin="0,305,0,0" VerticalAlignment="Top" Height="30" Width="142" Click="Tyhjennä_Click"/>
 
                 </Grid>
             </TabItem>
