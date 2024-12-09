@@ -49,6 +49,8 @@ namespace Sovelluskehitys2024
                 PäivitäAsiakasComboBox2();
                 PäivitäAsentajaComboBox();
                 PäivitäTilausTuotto();
+                PäivitäHuoltoTuotto();
+                PäivitäKokoTuotto();
 
             }
             catch
@@ -76,11 +78,44 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
-        
+        private void PäivitäHuoltoTuotto()
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
 
-      
+            SqlCommand komento = new SqlCommand("SELECT sum(h.hinta) FROM huoltopalvelut h JOIN huoltotilaukset ht ON h.id = ht.huoltopalvelu_id WHERE ht.valmis = 1;", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
 
-            private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
+            if (lukija.Read())
+            {
+                var tuotto = lukija.IsDBNull(0) ? 0 : lukija.GetInt32(0);
+
+                Huoltopalvelut_eurot.Content = tuotto.ToString();
+            }
+
+            yhteys.Close();
+        }
+
+        private void PäivitäKokoTuotto()
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT (SELECT SUM(t.hinta) FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1) + (SELECT SUM(h.hinta) FROM huoltopalvelut h JOIN huoltotilaukset ht ON h.id = ht.huoltopalvelu_id WHERE ht.valmis = 1) AS yhteissumma;", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            if (lukija.Read())
+            {
+                var tuotto = lukija.IsDBNull(0) ? 0 : lukija.GetInt32(0);
+
+                Kokonais_eurot.Content = tuotto.ToString();
+            }
+
+            yhteys.Close();
+        }
+
+
+        private void PäivitäDataGrid(string kysely, string taulu, DataGrid grid)
         {
             SqlConnection yhteys = new SqlConnection(polku);
             yhteys.Open();
@@ -226,11 +261,6 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PäivitäDataGrid("SELECT * FROM tuotteet", "tuotteet", tuotelista);
-            PäivitäComboBox(tuotelista_cb, tuotelista_cb_2);
-        }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -299,6 +329,7 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
+            
         }
 
 
@@ -319,6 +350,7 @@ namespace Sovelluskehitys2024
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='1'", "tilaukset", Toimitetutlista);
             PäivitäTilausTuotto();
+            PäivitäKokoTuotto();
 
         }
 
@@ -338,6 +370,8 @@ namespace Sovelluskehitys2024
 
             PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
             PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='1'", "huoltotilaukset", Toimitetuthuollotlista);
+            PäivitäHuoltoTuotto();
+            PäivitäKokoTuotto();
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)

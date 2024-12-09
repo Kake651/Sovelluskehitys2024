@@ -19,7 +19,6 @@ INSERT INTO tilaukset (asiakas_id, tuote_id) VALUES (1, 1)
 
 
 SELECT * FROM asiakkaat
-Delete FROM tuotteet
 SELECT * FROM tilaukset
 SELECT * FROM huoltopalvelut
 SELECT * FROM Asentajat
@@ -35,3 +34,15 @@ delete from asiakkaat where id = 4
 
 SELECT t.hinta FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1;
 SELECT sum(t.hinta) FROM tuotteet t JOIN tilaukset tl ON t.id = tl.tuote_id WHERE tl.toimitettu = 1;
+SELECT sum(h.hinta) FROM huoltopalvelut h JOIN huoltotilaukset ht ON h.id = ht.huoltopalvelu_id WHERE ht.valmis = 1
+
+SELECT 
+    (SELECT SUM(t.hinta) 
+     FROM tuotteet t 
+     JOIN tilaukset tl ON t.id = tl.tuote_id 
+     WHERE tl.toimitettu = 1)
+    +
+    (SELECT SUM(h.hinta) 
+     FROM huoltopalvelut h 
+     JOIN huoltotilaukset ht ON h.id = ht.huoltopalvelu_id 
+     WHERE ht.valmis = 1) AS yhteissumma;
