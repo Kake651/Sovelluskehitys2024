@@ -47,7 +47,9 @@ namespace Sovelluskehitys2024
                 PäivitäComboBox_2(huoltopalvelulista_cb, huoltopalvelulista_cb_2);
                 PäivitäAsiakasComboBox();
                 PäivitäAsiakasComboBox2();
+                PäivitäAsiakasComboBox3();
                 PäivitäAsentajaComboBox();
+                PäivitäAsentajaComboBox2();
                 PäivitäTilausTuotto();
                 PäivitäHuoltoTuotto();
                 PäivitäKokoTuotto();
@@ -231,6 +233,38 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
+        private void PäivitäAsiakasComboBox3()
+        {
+            //asiakaslista_cb.Items.Clear();
+
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM asiakkaat", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            asiakaslista_cb_3.ItemsSource = taulu.DefaultView;
+            asiakaslista_cb_3.DisplayMemberPath = "NIMI";
+            asiakaslista_cb_3.SelectedValuePath = "ID";
+
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //asiakaslista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
+
         private void PäivitäAsentajaComboBox()
         {
             SqlConnection yhteys = new SqlConnection(polku);
@@ -261,6 +295,35 @@ namespace Sovelluskehitys2024
             yhteys.Close();
         }
 
+        private void PäivitäAsentajaComboBox2()
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            SqlCommand komento = new SqlCommand("SELECT * FROM Asentajat", yhteys);
+            SqlDataReader lukija = komento.ExecuteReader();
+
+            DataTable taulu = new DataTable();
+            taulu.Columns.Add("ID", typeof(string));
+            taulu.Columns.Add("NIMI", typeof(string));
+
+            /* tehdään disokset että comboboxissa näytetään datataulua */
+            asentajalista_cb_2.ItemsSource = taulu.DefaultView;
+            asentajalista_cb_2.DisplayMemberPath = "NIMI";
+            asentajalista_cb_2.SelectedValuePath = "ID";
+
+
+            while (lukija.Read()) // käsitellään kyselytulos rivi riviltä
+            {
+                int id = lukija.GetInt32(0);
+                string nimi = lukija.GetString(1);
+                taulu.Rows.Add(id, nimi); // lisätään datatauluun rivi tietoineen
+                //asiakaslista_cb.Items.Add(lukija.GetString(1));
+            }
+            lukija.Close();
+
+            yhteys.Close();
+        }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -311,6 +374,8 @@ namespace Sovelluskehitys2024
             asiakasosoite.Clear();
             PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
             PäivitäAsiakasComboBox();
+            PäivitäAsiakasComboBox2();
+            PäivitäAsiakasComboBox3();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -389,6 +454,7 @@ namespace Sovelluskehitys2024
             asentajapuhelin.Clear();
             PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
             PäivitäAsentajaComboBox();
+            PäivitäAsentajaComboBox2();
 
         }
 
@@ -498,6 +564,39 @@ namespace Sovelluskehitys2024
             PäivitäTilausTuotto();
             PäivitäHuoltoTuotto();
             PäivitäKokoTuotto();
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string id = asiakaslista_cb_3.SelectedValue.ToString();
+            string kysely = "DELETE FROM asiakkaat WHERE id='" + id + "';";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT * FROM asiakkaat", "asiakkaat", asiakaslista);
+            PäivitäAsiakasComboBox();
+            PäivitäAsiakasComboBox2();
+            PäivitäAsiakasComboBox3();
+        }
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            SqlConnection yhteys = new SqlConnection(polku);
+            yhteys.Open();
+
+            string id = asentajalista_cb_2.SelectedValue.ToString();
+            string kysely = "DELETE FROM Asentajat WHERE id='" + id + "';";
+            SqlCommand komento = new SqlCommand(kysely, yhteys);
+            komento.ExecuteNonQuery();
+            yhteys.Close();
+
+            PäivitäDataGrid("SELECT * FROM Asentajat", "Asentajat", Asentajalista);
+            PäivitäAsentajaComboBox();
+            PäivitäAsentajaComboBox2();
         }
     }
 }
