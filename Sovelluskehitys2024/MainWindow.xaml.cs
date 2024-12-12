@@ -394,7 +394,8 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT ti.id as id, a.nimi as asiakas, tu.nimi as tuote FROM tilaukset ti, asiakkaat a, tuotteet tu where a.id=ti.asiakas_id and tu.id=ti.tuote_id and ti.toimitettu='0'", "tilaukset", Tilauslista);
-            
+            asiakaslista_cb.Text = "";
+            tuotelista_cb_2.Text = "";
         }
 
 
@@ -541,6 +542,9 @@ namespace Sovelluskehitys2024
             yhteys.Close();
 
             PäivitäDataGrid("SELECT hti.id as id, an.nimi as asentaja, hp.nimi as huoltopalvelu, a.nimi as asiakas FROM huoltotilaukset hti, Asentajat an, huoltopalvelut hp, asiakkaat a where an.id=hti.asentaja_id and hp.id=hti.huoltopalvelu_id and a.id=hti.asiakas_id and hti.valmis='0'", "huoltotilaukset", Huoltotilauslista);
+            asentajalista_cb.Text = "";
+            huoltopalvelulista_cb_2.Text = "";
+            asiakaslista_cb_2.Text = "";
         }
 
 
